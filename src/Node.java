@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Node {
     private char[] letters;
     private Node[] children;
@@ -22,9 +24,11 @@ public class Node {
         return letters[pos];
     }
 
+
     public void setLetters(char letter, int pos) {
         this.letters[pos] = letter;
     }
+
 
     public Node getChildren(int pos) {
         return children[pos];
@@ -53,9 +57,9 @@ public class Node {
 
     public Node getImmediateWord() {
         Node node = null;
-        if(this.word != ""){
-            for (int i = 0; i < 26; i++) {
-                if (this.children[i].getWord() != "") {
+        if (Objects.equals(this.word, "")) {
+            for (int i = 0; i < 26 && node==null; i++) {
+                if (this.children[i] != null && !Objects.equals(this.children[i].getWord(), "")) {
                     node = this.children[i];
                 }
             }
@@ -64,14 +68,13 @@ public class Node {
         return this;
     }
 
-    public int firstChild() {
-        boolean achou=false;
-        int i=0;
-        while(i < 26 && !achou) {
+    public int firstChildPosition() {
+        boolean found = false;
+        int i = 0;
+        while (i < 26 && !found) {
             if (this.children[i] != null) {
-                achou=true;
-            }
-            else{
+                found = true;
+            } else {
                 i++;
             }
         }
